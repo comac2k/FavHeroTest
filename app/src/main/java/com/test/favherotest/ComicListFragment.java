@@ -6,6 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.test.favherotest.model.Comic;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -16,12 +24,14 @@ import android.view.ViewGroup;
  * Use the {@link ComicListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComicListFragment extends Fragment {
+public class ComicListFragment extends Fragment implements ComicListPresenter.View {
     private static final String ARG_HERO_ID = "heroId";
 
-    private String mHeroId;
-
     private ComicListFragmentListener mListener;
+    private ComicListPresenter mPresenter = ProviderModule.getInstance().getComicListPresenter(this);
+
+    @BindView(R.id.comic_list) ListView mComicListView;
+    private ComicListAdapter mListAdapter;
 
     public ComicListFragment() {
         // Required empty public constructor
@@ -34,10 +44,10 @@ public class ComicListFragment extends Fragment {
      * @param heroId Parameter 1.
      * @return A new instance of fragment ComicListFragment.
      */
-    public static ComicListFragment newInstance(String heroId) {
+    public static ComicListFragment newInstance(long heroId) {
         ComicListFragment fragment = new ComicListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_HERO_ID, heroId);
+        args.putLong(ARG_HERO_ID, heroId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,15 +56,19 @@ public class ComicListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mHeroId = getArguments().getString(ARG_HERO_ID);
+            setHeroId(getArguments().getLong(ARG_HERO_ID));
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comic_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
+        ButterKnife.bind(this, view);
+        if (mListAdapter != null) {
+            mComicListView.setAdapter(mListAdapter);
+        }
+        return view;
     }
 
     @Override
@@ -72,6 +86,23 @@ public class ComicListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void setHeroId(long id) {
+        mPresenter.setHeroId(id);
+    }
+
+    @Override
+    public void showComicList(List<Comic> comicList) {
+        setListAdapter(comicList);
+    }
+
+    private void setListAdapter(List<Comic> comicList) {
+        mListAdapter = new ComicListAdapter(getContext(), comicList);
+        if (mComicListView != null) {
+            mComicListView.setAdapter(mListAdapter);
+        }
+
     }
 
     public interface ComicListFragmentListener {

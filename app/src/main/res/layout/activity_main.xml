@@ -8,11 +8,9 @@
     tools:context="com.test.favherotest.MainActivity"
     android:baselineAligned="false">
 
-    <fragment
-        android:id="@+id/comic_list_fragment"
-        android:name="com.test.favherotest.ComicListFragment"
+    <FrameLayout
+        android:id="@+id/comic_list_fragment_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_comic_list" />
+        android:layout_weight="1" />
 </LinearLayout>
