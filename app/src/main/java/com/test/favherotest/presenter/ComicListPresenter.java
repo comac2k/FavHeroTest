@@ -14,12 +14,9 @@ public class ComicListPresenter {
     private final View mView;
     private BehaviorSubject<MarvelComicsRequest> mOnComicsChanged = BehaviorSubject.create();
 
-    public ComicListPresenter(View view) {
+    public ComicListPresenter(View view, long heroId) {
         mView = view;
-    }
-
-    public void setHeroId(long id) {
-        mOnComicsChanged.onNext(new MarvelComicsRequest(id));
+        mOnComicsChanged.onNext(new MarvelComicsRequest(heroId));
     }
 
     public Observable<MarvelComicsRequest> getOnComicsChanged() {

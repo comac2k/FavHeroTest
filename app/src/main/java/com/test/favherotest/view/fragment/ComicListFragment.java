@@ -32,7 +32,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     private static final String ARG_HERO_ID = "heroId";
 
     private ComicListFragmentListener mListener;
-    private ComicListPresenter mPresenter = ProviderModule.getInstance().getComicListPresenter(this);
+    private ComicListPresenter mPresenter;
 
     @BindView(R.id.comic_list) ListView mComicListView;
     private MarvelResultAdapter adapter;
@@ -60,7 +60,8 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            setHeroId(getArguments().getLong(ARG_HERO_ID));
+            long heroId = getArguments().getLong(ARG_HERO_ID);
+            mPresenter = ProviderModule.getInstance().getComicListPresenter(this, heroId);
         }
     }
 
@@ -99,10 +100,6 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public void setHeroId(long id) {
-        mPresenter.setHeroId(id);
     }
 
     @Override

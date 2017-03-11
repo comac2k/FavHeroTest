@@ -26,8 +26,8 @@ public class ProviderModule {
         return singleton;
     }
 
-    public ComicListPresenter getComicListPresenter(ComicListPresenter.View view) {
-        return new ComicListPresenter(view);
+    public ComicListPresenter getComicListPresenter(ComicListPresenter.View view, long heroId) {
+        return new ComicListPresenter(view, heroId);
     }
 
     public MarvelAPI provideMarvelApi() {
