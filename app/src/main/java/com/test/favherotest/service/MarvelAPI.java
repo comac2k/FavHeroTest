@@ -14,10 +14,12 @@ import rx.Observable;
  */
 
 public interface MarvelAPI {
-    @GET("/v1/public/characters/{characterId}/comics")
+    @GET("/v1/public/characters/{mCharacterId}/comics")
     Observable<MarvelApiResponse<MarvelComic>> getComics(
-            @Path("characterId") long characterId,
+            @Path("mCharacterId") long characterId,
             @Query("apikey") String publickey,
             @Query("ts") String timestamp,
-            @Query("hash") String hash);
+            @Query("hash") String hash,
+            @Query("offset") int offset,
+            @Query("limit") int limit);
 }

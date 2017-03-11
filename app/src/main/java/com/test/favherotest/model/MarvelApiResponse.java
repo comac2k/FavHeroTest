@@ -1,5 +1,6 @@
 package com.test.favherotest.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,15 @@ public class MarvelApiResponse<PayLoadType> {
         public List<PayLoadType> getResults() {
             return results;
         }
+
+        public Data<PayLoadType> empty() {
+            offset = 0;
+            limit = 0;
+            total = 0;
+            count = 0;
+            results = new ArrayList<>();
+            return this;
+        }
     }
 
     public String getCode() {
@@ -50,5 +60,12 @@ public class MarvelApiResponse<PayLoadType> {
 
     public Data<PayLoadType> getData() {
         return data;
+    }
+
+    public MarvelApiResponse<PayLoadType> empty() {
+        code = "";
+        status = "";
+        data = new Data<PayLoadType>().empty();
+        return this;
     }
 }

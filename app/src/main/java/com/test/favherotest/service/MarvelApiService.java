@@ -7,7 +7,6 @@ import com.test.favherotest.model.MarvelComic;
 import java.security.NoSuchAlgorithmException;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by comac on 19/02/2017.
@@ -50,12 +49,11 @@ public class MarvelApiService {
         return "1";
     }
 
-    public Observable<MarvelApiResponse<MarvelComic>> getComics(long characterId) {
+    public Observable<MarvelApiResponse<MarvelComic>> getComics(long characterId, int offset, int pageSize) {
         String ts = getTimestamp();
         String hash = getHash(ts);
 
-        return marvelAPI.getComics(characterId, PUBLICKEY, ts, hash)
-                .observeOn(AndroidSchedulers.mainThread());
+        return marvelAPI.getComics(characterId, PUBLICKEY, ts, hash, offset, pageSize);
     }
 
 }

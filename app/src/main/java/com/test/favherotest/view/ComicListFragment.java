@@ -31,6 +31,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     private ComicListPresenter mPresenter = ProviderModule.getInstance().getComicListPresenter(this);
 
     @BindView(R.id.comic_list) ListView mComicListView;
+    private MarvelResultAdapter adapter;
 
     public ComicListFragment() {
         // Required empty public constructor
@@ -64,8 +65,18 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
         ButterKnife.bind(this, view);
-        mPresenter.getOnComicsChanged().subscribe(comics -> mComicListView.setAdapter(new ComicListAdapter(getContext(), comics)));
+        mPresenter.getOnComicsChanged().subscribe(request -> {
+            if (adapter != null) { adapter.dispose(); }
+            adapter = new MarvelResultAdapter(getContext(), R.layout.comic_item, request, new ComicItemViewDresser(getContext()));
+            mComicListView.setAdapter(adapter);
+        });
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (adapter != null) { adapter.dispose(); }
+        super.onDestroyView();
     }
 
     @Override
