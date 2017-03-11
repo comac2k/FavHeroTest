@@ -33,10 +33,10 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
-    testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxjava:1.2.7'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.jakewharton:butterknife:8.5.1'
+    testCompile 'junit:junit:4.12'
 }
