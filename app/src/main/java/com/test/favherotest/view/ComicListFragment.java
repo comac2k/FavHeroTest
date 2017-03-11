@@ -10,10 +10,7 @@ import android.widget.ListView;
 
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
-import com.test.favherotest.model.Comic;
 import com.test.favherotest.presenter.ComicListPresenter;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,14 +24,13 @@ import butterknife.ButterKnife;
  * Use the {@link ComicListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComicListFragment extends Fragment implements ComicListPresenter.View {
+public class ComicListFragment extends BaseFragment implements ComicListPresenter.View {
     private static final String ARG_HERO_ID = "heroId";
 
     private ComicListFragmentListener mListener;
     private ComicListPresenter mPresenter = ProviderModule.getInstance().getComicListPresenter(this);
 
     @BindView(R.id.comic_list) ListView mComicListView;
-    private ComicListAdapter mListAdapter;
 
     public ComicListFragment() {
         // Required empty public constructor
@@ -68,9 +64,7 @@ public class ComicListFragment extends Fragment implements ComicListPresenter.Vi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
         ButterKnife.bind(this, view);
-        if (mListAdapter != null) {
-            mComicListView.setAdapter(mListAdapter);
-        }
+        mPresenter.getOnComicsChanged().subscribe(comics -> mComicListView.setAdapter(new ComicListAdapter(getContext(), comics)));
         return view;
     }
 
@@ -93,19 +87,6 @@ public class ComicListFragment extends Fragment implements ComicListPresenter.Vi
 
     public void setHeroId(long id) {
         mPresenter.setHeroId(id);
-    }
-
-    @Override
-    public void showComicList(List<Comic> comicList) {
-        setListAdapter(comicList);
-    }
-
-    private void setListAdapter(List<Comic> comicList) {
-        mListAdapter = new ComicListAdapter(getContext(), comicList);
-        if (mComicListView != null) {
-            mComicListView.setAdapter(mListAdapter);
-        }
-
     }
 
     public interface ComicListFragmentListener {
