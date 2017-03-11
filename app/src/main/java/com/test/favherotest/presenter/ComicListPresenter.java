@@ -1,4 +1,4 @@
-package com.test.favherotest;
+package com.test.favherotest.presenter;
 
 import com.test.favherotest.model.Comic;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by comac on 11/03/2017.
  */
 
-class ComicListPresenter {
+public class ComicListPresenter {
 
     private final View mView;
 

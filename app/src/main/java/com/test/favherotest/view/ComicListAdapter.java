@@ -1,4 +1,4 @@
-package com.test.favherotest;
+package com.test.favherotest.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.test.favherotest.R;
 import com.test.favherotest.model.Comic;
 
 import java.util.List;

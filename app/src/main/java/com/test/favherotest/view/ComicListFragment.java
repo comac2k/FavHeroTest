@@ -1,4 +1,4 @@
-package com.test.favherotest;
+package com.test.favherotest.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.test.favherotest.ProviderModule;
+import com.test.favherotest.R;
 import com.test.favherotest.model.Comic;
+import com.test.favherotest.presenter.ComicListPresenter;
 
 import java.util.List;
 

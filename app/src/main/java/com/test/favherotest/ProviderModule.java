@@ -1,5 +1,7 @@
 package com.test.favherotest;
 
+import com.test.favherotest.presenter.ComicListPresenter;
+
 /**
  * Created by comac on 11/03/2017.
  */
