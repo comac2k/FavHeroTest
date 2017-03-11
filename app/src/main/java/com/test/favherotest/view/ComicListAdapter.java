@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.test.favherotest.R;
-import com.test.favherotest.model.Comic;
+import com.test.favherotest.model.MarvelComic;
+import com.test.favherotest.model.MarvelThumbnail;
 
 import java.util.List;
 
@@ -20,14 +21,12 @@ import java.util.List;
  * Created by comac on 11/03/2017.
  */
 
-class ComicListAdapter extends ArrayAdapter<Comic> {
+class ComicListAdapter extends ArrayAdapter<MarvelComic> {
 
-    private final List<Comic> mComics;
     private Context mContext;
 
-    public ComicListAdapter(Context context, List<Comic> comics) {
+    public ComicListAdapter(Context context, List<MarvelComic> comics) {
         super(context, R.layout.comic_item, comics);
-        mComics = comics;
         mContext = context;
     }
 
@@ -39,10 +38,12 @@ class ComicListAdapter extends ArrayAdapter<Comic> {
             convertView = inflater.inflate(R.layout.comic_item, parent, false);
         }
 
-        Comic comic = getItem(position);
+        MarvelComic comic = getItem(position);
 
         ((TextView)convertView.findViewById(R.id.comic_item_title)).setText(comic.getTitle());
-        Picasso.with(mContext).load(comic.getCoverUrl()).into((ImageView)convertView.findViewById(R.id.comic_item_cover));
+        Picasso.with(mContext)
+                .load(comic.getThumbnail().getUrl(MarvelThumbnail.Variants.PORTRAIT_INCREDIBLE))
+                .into((ImageView)convertView.findViewById(R.id.comic_item_cover));
 
         return convertView;
     }
