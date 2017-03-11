@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="80dp">
 
     <ImageView
         android:id="@+id/comic_item_cover"
@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:padding="8dp"
+        style="@style/MediumTitle"
         tools:text="Comic Title" />
 
 </LinearLayout>

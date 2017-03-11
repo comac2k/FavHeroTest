@@ -6,13 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
+import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.presenter.ComicListPresenter;
-import com.test.favherotest.view.viewDresser.ComicItemViewDresser;
 import com.test.favherotest.view.adapter.MarvelResultAdapter;
+import com.test.favherotest.view.viewDresser.ComicItemViewDresser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +28,7 @@ import butterknife.ButterKnife;
  * Use the {@link ComicListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComicListFragment extends BaseFragment implements ComicListPresenter.View {
+public class ComicListFragment extends BaseFragment implements ComicListPresenter.View, AdapterView.OnItemClickListener {
     private static final String ARG_HERO_ID = "heroId";
 
     private ComicListFragmentListener mListener;
@@ -71,6 +73,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
             if (adapter != null) { adapter.dispose(); }
             adapter = new MarvelResultAdapter(getContext(), R.layout.comic_item, request, new ComicItemViewDresser(getContext()));
             mComicListView.setAdapter(adapter);
+            mComicListView.setOnItemClickListener(this);
         });
         return view;
     }
@@ -102,6 +105,15 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
         mPresenter.setHeroId(id);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        MarvelComic comicId = (MarvelComic)view.getTag();
+        if (comicId != null) {
+            mListener.onComicSelected(comicId);
+        }
+    }
+
     public interface ComicListFragmentListener {
+        void onComicSelected(MarvelComic comicId);
     }
 }

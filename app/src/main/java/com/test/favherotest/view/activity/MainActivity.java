@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.test.favherotest.R;
+import com.test.favherotest.model.MarvelComic;
+import com.test.favherotest.view.fragment.ComicDetailFragment;
 import com.test.favherotest.view.fragment.ComicListFragment;
 
-public class MainActivity extends AppCompatActivity implements ComicListFragment.ComicListFragmentListener {
+public class MainActivity extends AppCompatActivity implements ComicListFragment.ComicListFragmentListener, ComicDetailFragment.ComicDetailFragmentListener {
 
     final static long FAV_HERO_ID = 1009220;
+    final static String DETAIL_FRAGMENT_STACK_NAME = "detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +25,16 @@ public class MainActivity extends AppCompatActivity implements ComicListFragment
                     .add(R.id.comic_list_fragment_container, listFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onComicSelected(MarvelComic comic) {
+        ComicDetailFragment detailFragment = ComicDetailFragment.newInstance(comic);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(DETAIL_FRAGMENT_STACK_NAME)
+                .replace(R.id.comic_list_fragment_container, detailFragment)
+                .commit();
+
     }
 }

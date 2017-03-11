@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.test.favherotest.R;
 import com.test.favherotest.model.MarvelComic;
-import com.test.favherotest.model.MarvelThumbnail;
+import com.test.favherotest.model.MarvelImage;
 import com.test.favherotest.view.adapter.MarvelResultAdapter;
 
 /**
@@ -27,13 +27,15 @@ public class ComicItemViewDresser implements MarvelResultAdapter.ViewDresser<Mar
     public void resetView(View view) {
         ((TextView)view.findViewById(R.id.comic_item_title)).setText(null);
         ((ImageView)view.findViewById(R.id.comic_item_cover)).setImageDrawable(null);
+        view.setTag(null);
     }
 
     @Override
-    public void dressView(View view, MarvelComic data) {
-        ((TextView)view.findViewById(R.id.comic_item_title)).setText(data.getTitle());
+    public void dressView(View view, MarvelComic comic) {
+        ((TextView)view.findViewById(R.id.comic_item_title)).setText(comic.getTitle());
         Picasso.with(mContext)
-                .load(data.getThumbnail().getUrl(MarvelThumbnail.Variants.PORTRAIT_INCREDIBLE))
+                .load(comic.getThumbnail().getUrl(MarvelImage.Variants.PORTRAIT_INCREDIBLE))
                 .into((ImageView)view.findViewById(R.id.comic_item_cover));
+        view.setTag(comic);
     }
 }

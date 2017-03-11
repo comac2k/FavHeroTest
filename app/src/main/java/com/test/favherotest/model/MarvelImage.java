@@ -4,7 +4,7 @@ package com.test.favherotest.model;
  * Created by comac on 19/02/2017.
  */
 
-public class MarvelThumbnail {
+public class MarvelImage {
     private String path;
     private String extension;
 
