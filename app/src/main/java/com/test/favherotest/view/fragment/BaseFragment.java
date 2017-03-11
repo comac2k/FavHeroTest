@@ -1,4 +1,4 @@
-package com.test.favherotest.view;
+package com.test.favherotest.view.fragment;
 
 import android.support.v4.app.Fragment;
 

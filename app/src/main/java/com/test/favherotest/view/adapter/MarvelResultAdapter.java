@@ -1,4 +1,4 @@
-package com.test.favherotest.view;
+package com.test.favherotest.view.adapter;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -144,7 +144,7 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
         return true;
     }
 
-    interface ViewDresser<RequestType> {
+    public interface ViewDresser<RequestType> {
         void resetView(View view);
         void dressView(View view, RequestType data);
     }

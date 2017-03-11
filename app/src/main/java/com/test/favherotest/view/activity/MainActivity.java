@@ -1,9 +1,10 @@
-package com.test.favherotest.view;
+package com.test.favherotest.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.test.favherotest.R;
+import com.test.favherotest.view.fragment.ComicListFragment;
 
 public class MainActivity extends AppCompatActivity implements ComicListFragment.ComicListFragmentListener {
 

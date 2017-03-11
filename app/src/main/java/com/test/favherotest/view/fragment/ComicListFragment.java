@@ -1,4 +1,4 @@
-package com.test.favherotest.view;
+package com.test.favherotest.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.ListView;
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
 import com.test.favherotest.presenter.ComicListPresenter;
+import com.test.favherotest.view.viewDresser.ComicItemViewDresser;
+import com.test.favherotest.view.adapter.MarvelResultAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

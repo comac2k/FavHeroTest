@@ -1,4 +1,4 @@
-package com.test.favherotest.view;
+package com.test.favherotest.view.viewDresser;
 
 import android.content.Context;
 import android.view.View;
@@ -9,16 +9,17 @@ import com.squareup.picasso.Picasso;
 import com.test.favherotest.R;
 import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.model.MarvelThumbnail;
+import com.test.favherotest.view.adapter.MarvelResultAdapter;
 
 /**
  * Created by comac on 11/03/2017.
  */
 
-class ComicItemViewDresser implements MarvelResultAdapter.ViewDresser<MarvelComic> {
+public class ComicItemViewDresser implements MarvelResultAdapter.ViewDresser<MarvelComic> {
 
     private Context mContext;
 
-    ComicItemViewDresser(Context mContext) {
+    public ComicItemViewDresser(Context mContext) {
         this.mContext = mContext;
     }
 
