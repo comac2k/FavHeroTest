@@ -1,5 +1,7 @@
 package com.test.favherotest;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.test.favherotest.presenter.ComicListPresenter;
 import com.test.favherotest.service.MarvelAPI;
 import com.test.favherotest.service.MarvelApiService;
@@ -45,4 +47,8 @@ public class ProviderModule {
         return MarvelApiService.getInstance();
     }
 
+    @VisibleForTesting
+    static void setInstance(ProviderModule provider) {
+        singleton = provider;
+    }
 }

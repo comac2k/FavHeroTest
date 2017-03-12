@@ -43,4 +43,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    androidTestCompile 'org.mockito:mockito-core:2.0.2-beta'
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker-dx:1.4'
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker:1.4'
+    androidTestCompile ('com.android.support.test.espresso:espresso-web:2.2.2',  {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }

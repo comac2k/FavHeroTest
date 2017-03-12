@@ -72,6 +72,7 @@ public class ComicDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
         mTitle.setText(mComic.getTitle());
         mDescription.loadData("<style>* { color: white; font-size: 13pt; text-shadow: 2px 2px 2px black; }\nbody { background-color:transparent; margin: 0; padding: 0; }</style>" + mComic.getDescription(), "text/html", "UTF-8");
+        mDescription.setTag(mComic.getDescription());
         mDescription.setBackgroundColor(Color.TRANSPARENT);
         Picasso.with(getContext())
                 .load(mComic.getRandomImage().getUrl(MarvelImage.Variants.PORTRAIT_INCREDIBLE)) // TODO: switch land / port

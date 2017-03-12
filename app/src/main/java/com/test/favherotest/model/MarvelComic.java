@@ -14,6 +14,14 @@ public class MarvelComic implements Serializable {
     private MarvelImage thumbnail;
     private List<MarvelImage> images;
 
+    public MarvelComic(Long id, String title, String description, MarvelImage thumbnail, List<MarvelImage> images) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.images = images;
+    }
+
     public Long getId() {
         return id;
     }

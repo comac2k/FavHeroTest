@@ -48,6 +48,15 @@ public class MarvelApiResponse<PayLoadType> {
             results = new ArrayList<>();
             return this;
         }
+
+        public Data<PayLoadType> withValues(List<PayLoadType> values) {
+            offset = 0;
+            limit = 0;
+            total = values.size();
+            count = values.size();
+            results = values;
+            return this;
+        }
     }
 
     public String getCode() {
@@ -66,6 +75,13 @@ public class MarvelApiResponse<PayLoadType> {
         code = "";
         status = "";
         data = new Data<PayLoadType>().empty();
+        return this;
+    }
+
+    public MarvelApiResponse<PayLoadType> withValues(List<PayLoadType> values) {
+        code = "";
+        status = "";
+        data = new Data<PayLoadType>().withValues(values);
         return this;
     }
 }
