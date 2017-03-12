@@ -15,7 +15,8 @@ public class MarvelImage {
     public enum Variants {
         PORTRAIT_INCREDIBLE("/portrait_incredible."),
         STANDARD_FANTASTIC("/standard_fantastic."),
-        LANDSCAPE_XLARGE("/landscape_xlarge.");
+        LANDSCAPE_XLARGE("/landscape_xlarge."),
+        DETAIL("/detail.");
 
         private final String mUrlPath;
 

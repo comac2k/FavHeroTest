@@ -75,8 +75,7 @@ public class ComicDetailFragment extends Fragment {
         mDescription.setTag(mComic.getDescription());
         mDescription.setBackgroundColor(Color.TRANSPARENT);
         Picasso.with(getContext())
-                .load(mComic.getRandomImage().getUrl(MarvelImage.Variants.PORTRAIT_INCREDIBLE)) // TODO: switch land / port
-                .fit()
+                .load(mComic.getRandomImage().getUrl(MarvelImage.Variants.DETAIL))
                 .into(mImage);
         return view;
     }
