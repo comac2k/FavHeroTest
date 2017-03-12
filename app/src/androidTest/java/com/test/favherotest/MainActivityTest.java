@@ -75,11 +75,11 @@ public class MainActivityTest {
     }
 
     private MarvelApiResponse<MarvelComic> getMockedComicsReponse() {
-        List<MarvelComic> values = Arrays.asList(new MarvelComic[]{ new MarvelComic(1l, TEST_TITLE, TEST_DESCRIPTION, new MarvelImage(), getMickedImageList()) });
+        List<MarvelComic> values = Arrays.asList(new MarvelComic[]{ new MarvelComic(1l, TEST_TITLE, TEST_DESCRIPTION, new MarvelImage(), getMockedImageList()) });
         return new MarvelApiResponse<MarvelComic>().withValues(values);
     }
 
-    private List<MarvelImage> getMickedImageList() {
+    private List<MarvelImage> getMockedImageList() {
         return Arrays.asList(new MarvelImage[]{ new MarvelImage() });
     }
 }

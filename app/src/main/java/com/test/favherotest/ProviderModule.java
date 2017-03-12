@@ -51,7 +51,7 @@ public class ProviderModule {
     }
 
     @VisibleForTesting
-    static void setInstance(ProviderModule provider) {
+    public static void setInstance(ProviderModule provider) {
         singleton = provider;
     }
 

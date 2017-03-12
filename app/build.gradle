@@ -22,6 +22,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -47,6 +50,7 @@ dependencies {
     androidTestCompile 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
     androidTestCompile 'com.crittercism.dexmaker:dexmaker-dx:1.4'
     androidTestCompile 'com.crittercism.dexmaker:dexmaker:1.4'
+    testCompile 'org.mockito:mockito-core:2.0.2-beta'
     androidTestCompile ('com.android.support.test.espresso:espresso-web:2.2.2',  {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

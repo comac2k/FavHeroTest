@@ -49,10 +49,10 @@ public class MarvelApiResponse<PayLoadType> {
             return this;
         }
 
-        public Data<PayLoadType> withValues(List<PayLoadType> values) {
+        public Data<PayLoadType> withValues(List<PayLoadType> values, int total) {
             offset = 0;
             limit = 0;
-            total = values.size();
+            this.total = total;
             count = values.size();
             results = values;
             return this;
@@ -79,9 +79,14 @@ public class MarvelApiResponse<PayLoadType> {
     }
 
     public MarvelApiResponse<PayLoadType> withValues(List<PayLoadType> values) {
+        return withValues(values, values.size());
+    }
+
+    public MarvelApiResponse<PayLoadType> withValues(List<PayLoadType> values, int total) {
         code = "";
         status = "";
-        data = new Data<PayLoadType>().withValues(values);
+        data = new Data<PayLoadType>().withValues(values, total);
         return this;
     }
+
 }

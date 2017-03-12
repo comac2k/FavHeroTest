@@ -28,10 +28,15 @@ public abstract class MarvelApiRequest<RequestType> {
 
     public Observable<MarvelApiResponse<RequestType>> fetchMetadata() {
         if (mMetadata != null) { return just(mMetadata); }
-        return requestResultPage(0)
+        BehaviorSubject<MarvelApiResponse<RequestType>> onMetadata = BehaviorSubject.create();
+
+        requestResultPage(0)
                 .onErrorResumeNext(just(new MarvelApiResponse<RequestType>().empty()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(this::metadataReceived);
+                .subscribe(response -> {
+                    metadataReceived(response);
+                    onMetadata.onNext(response);
+                });
+        return onMetadata.observeOn(AndroidSchedulers.mainThread());
     }
 
     private MarvelApiResponse<RequestType> metadataReceived(MarvelApiResponse<RequestType> response) {
@@ -85,9 +90,12 @@ public abstract class MarvelApiRequest<RequestType> {
                     return just(pagesLoaded.get(pageNr));
                 }
 
+                Observable<MarvelApiResponse<RequestType>> result;
+
                 // Add a new request only if we're not already waiting for a response
                 if (!pageRequests.containsKey(pageNr)) {
                     BehaviorSubject<MarvelApiResponse<RequestType>> pageRequest = BehaviorSubject.create();
+                    result = pageRequest;
                     pageRequests.put(pageNr, pageRequest);
 
                     // Do the request once and emmit the response to pageRequests observable so that all the
@@ -100,9 +108,12 @@ public abstract class MarvelApiRequest<RequestType> {
                                 pageRequest.onNext(data);
                             });
                 }
+                else {
+                    result = pageRequests.get(pageNr);
+                }
 
                 // Either case, return a reference to the request (pre-existing or new)
-                return pageRequests.get(pageNr);
+                return result;
             }
         }
 
