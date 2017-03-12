@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/comic_item_cover"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="50dp"
+        android:layout_height="75dp"
         android:adjustViewBounds="true"
         tools:src="@mipmap/ic_launcher"
         android:contentDescription="@string/comic_cover_description" />
