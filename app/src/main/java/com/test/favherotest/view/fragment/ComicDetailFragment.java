@@ -2,6 +2,7 @@ package com.test.favherotest.view.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ import butterknife.ButterKnife;
  * Use the {@link ComicDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComicDetailFragment extends Fragment implements ComicDetailPresenter.View, AdapterView.OnItemClickListener {
+public class ComicDetailFragment extends BaseFragment implements ComicDetailPresenter.View, AdapterView.OnItemClickListener {
     private static final String ARG_COMIC_ID = "comicId";
 
     private MarvelComic mComic;
@@ -42,6 +43,7 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
     @BindView(R.id.description) WebView mDescription;
     @BindView(R.id.background_image) ImageView mImage;
     @BindView(R.id.character_list) ListView mCharacterListView;
+    @BindView(R.id.spinner_image) ImageView mSpinnerImage;
 
     private ComicDetailFragmentListener mListener;
     private ComicDetailPresenter mPresenter;
@@ -87,11 +89,20 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
         mDescription.setBackgroundColor(Color.TRANSPARENT);
         Picasso.with(getContext())
                 .load(mComic.getRandomImage().getUrl(MarvelImage.Variants.DETAIL))
+                .placeholder(R.drawable.spinner)
                 .into(mImage);
+
+        mSpinnerImage.setBackgroundResource(R.drawable.spinner);
+        mSpinnerImage.setVisibility(View.VISIBLE);
+        ((AnimationDrawable)mSpinnerImage.getBackground()).start();
 
         mPresenter.getOnCharactersChanged().subscribe(request -> {
             if (adapter != null) { adapter.dispose(); }
             adapter = new MarvelResultAdapter(getContext(), R.layout.character_item, request, new ComicItemViewDresser(getContext()));
+            mSubscriptions.add(adapter.getOnReady().subscribe(ignored -> {
+                ((AnimationDrawable)mSpinnerImage.getBackground()).stop();
+                mSpinnerImage.setVisibility(View.GONE);
+            }));
             mCharacterListView.setAdapter(adapter);
             mCharacterListView.setOnItemClickListener(this);
         });

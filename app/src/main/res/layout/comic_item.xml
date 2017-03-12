@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/comic_item_cover"
-        android:layout_width="50dp"
-        android:layout_height="75dp"
-        android:adjustViewBounds="true"
-        tools:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/comic_cover_description" />
-
-    <TextView
-        android:id="@+id/comic_item_title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:padding="8dp"
-        style="@style/MediumTitle"
-        tools:text="Comic Title" />
+        android:id="@+id/spinner_image"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/comic_item_cover"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:adjustViewBounds="true"
+            tools:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/comic_cover_description" />
+
+        <TextView
+            android:id="@+id/comic_item_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp"
+            style="@style/MediumTitle"
+            tools:text="Comic Title" />
+
+    </LinearLayout>
+</FrameLayout>

@@ -1,12 +1,14 @@
 package com.test.favherotest.view.fragment;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,6 +40,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
 
     @BindView(R.id.comic_list) ListView mComicListView;
     @BindView(R.id.character_name) TextView mCharacterName;
+    @BindView(R.id.spinner_image) ImageView mSpinnerImage;
 
     private MarvelResultAdapter adapter;
     private MarvelCharacter mCharacter;
@@ -50,7 +53,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param heroId Parameter 1.
+     * @param character Parameter 1.
      * @return A new instance of fragment ComicListFragment.
      */
     public static ComicListFragment newInstance(MarvelCharacter character) {
@@ -76,9 +79,16 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
         View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
         ButterKnife.bind(this, view);
         mCharacterName.setText(mCharacter.getName());
+        mSpinnerImage.setBackgroundResource(R.drawable.spinner);
+        mSpinnerImage.setVisibility(View.VISIBLE);
+        ((AnimationDrawable)mSpinnerImage.getBackground()).start();
         mPresenter.getOnComicsChanged().subscribe(request -> {
             if (adapter != null) { adapter.dispose(); }
             adapter = new MarvelResultAdapter(getContext(), R.layout.comic_item, request, new ComicItemViewDresser(getContext()));
+            mSubscriptions.add(adapter.getOnReady().subscribe(ignored -> {
+                ((AnimationDrawable)mSpinnerImage.getBackground()).stop();
+                mSpinnerImage.setVisibility(View.GONE);
+            }));
             mComicListView.setAdapter(adapter);
             mComicListView.setOnItemClickListener(this);
         });

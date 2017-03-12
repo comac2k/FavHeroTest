@@ -1,6 +1,7 @@
 package com.test.favherotest.view.viewDresser;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,13 +29,23 @@ public class ComicItemViewDresser implements MarvelResultAdapter.ViewDresser<Mar
         ((TextView)view.findViewById(R.id.comic_item_title)).setText(null);
         ((ImageView)view.findViewById(R.id.comic_item_cover)).setImageDrawable(null);
         view.setTag(null);
+
+        ImageView spinner = (ImageView) view.findViewById(R.id.spinner_image);
+        spinner.setBackgroundResource(R.drawable.spinner);
+        spinner.setVisibility(View.VISIBLE);
+        ((AnimationDrawable) spinner.getBackground()).start();
     }
 
     @Override
     public void dressView(View view, MarvelImageAndText item) {
+        ImageView spinner = (ImageView) view.findViewById(R.id.spinner_image);
+        ((AnimationDrawable) spinner.getBackground()).stop();
+        spinner.setVisibility(View.GONE);
+
         ((TextView)view.findViewById(R.id.comic_item_title)).setText(item.getText());
         Picasso.with(mContext)
                 .load(item.getImageUrl(MarvelImage.Variants.PORTRAIT_INCREDIBLE))
+                .placeholder(R.drawable.spinner)
                 .into((ImageView)view.findViewById(R.id.comic_item_cover));
         view.setTag(item);
     }

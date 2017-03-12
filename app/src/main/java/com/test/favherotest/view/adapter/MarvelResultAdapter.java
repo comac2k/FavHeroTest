@@ -18,6 +18,7 @@ import java.util.HashMap;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
 
@@ -32,6 +33,11 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
     private final int mLayout;
     MarvelApiRequest<RequestType> mRequest;
     CompositeSubscription mSubscriptions = new CompositeSubscription();
+    BehaviorSubject<Boolean> mOnReady = BehaviorSubject.create();
+
+    public BehaviorSubject<Boolean> getOnReady() {
+        return mOnReady;
+    }
 
     public MarvelResultAdapter(@NonNull Context context, @LayoutRes int layout, @NonNull MarvelApiRequest<RequestType> request, ViewDresser dresser) {
         this.mRequest = request;
@@ -53,8 +59,8 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
         }
         else {
             cleanSubscriptionsForView(convertView);
-            mDresser.resetView(convertView);
         }
+        mDresser.resetView(convertView);
         View finalConvertView = convertView;
         trackViewSubscription(convertView, mRequest.getItem(position)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -102,7 +108,10 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-        mSubscriptions.add(fetchMetadata().subscribe(ignored -> observer.onInvalidated() ));
+        mSubscriptions.add(fetchMetadata().subscribe(ignored -> {
+            observer.onInvalidated();
+            mOnReady.onNext(true);
+        } ));
     }
 
     @Override

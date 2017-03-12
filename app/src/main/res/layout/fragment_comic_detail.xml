@@ -39,11 +39,23 @@
             android:gravity="center"
             android:text="@string/characters_title"/>
 
-        <ListView
-            android:id="@+id/character_list"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/spinner_image"
+                android:background="@drawable/spinner"
+                android:scaleType="center"/>
+
+            <ListView
+                android:id="@+id/character_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
 
     </LinearLayout>
 </FrameLayout>
