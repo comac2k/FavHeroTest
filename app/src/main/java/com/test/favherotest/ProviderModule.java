@@ -2,9 +2,12 @@ package com.test.favherotest;
 
 import android.support.annotation.VisibleForTesting;
 
+import com.test.favherotest.model.MarvelComic;
+import com.test.favherotest.presenter.ComicDetailPresenter;
 import com.test.favherotest.presenter.ComicListPresenter;
 import com.test.favherotest.service.MarvelAPI;
 import com.test.favherotest.service.MarvelApiService;
+import com.test.favherotest.view.fragment.ComicDetailFragment;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -50,5 +53,9 @@ public class ProviderModule {
     @VisibleForTesting
     static void setInstance(ProviderModule provider) {
         singleton = provider;
+    }
+
+    public ComicDetailPresenter getComicDetailPresenter(ComicDetailPresenter.View view, long comicId) {
+        return new ComicDetailPresenter(view, comicId);
     }
 }

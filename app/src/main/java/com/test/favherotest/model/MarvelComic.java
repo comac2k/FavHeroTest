@@ -7,7 +7,7 @@ import java.util.List;
  * Created by comac on 19/02/2017.
  */
 
-public class MarvelComic implements Serializable {
+public class MarvelComic implements Serializable, MarvelImageAndText {
     private Long id;
     private String title;
     private String description;
@@ -40,5 +40,15 @@ public class MarvelComic implements Serializable {
 
     public MarvelImage getRandomImage() {
         return images.get((int) (images.size() * Math.random()));
+    }
+
+    @Override
+    public String getText() {
+        return getTitle();
+    }
+
+    @Override
+    public String getImageUrl(MarvelImage.Variants variant) {
+        return getThumbnail().getUrl(variant);
     }
 }

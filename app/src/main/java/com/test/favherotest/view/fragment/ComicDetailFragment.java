@@ -8,13 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
 import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.model.MarvelImage;
+import com.test.favherotest.presenter.ComicDetailPresenter;
+import com.test.favherotest.view.adapter.MarvelResultAdapter;
+import com.test.favherotest.view.viewDresser.ComicItemViewDresser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,15 +33,18 @@ import butterknife.ButterKnife;
  * Use the {@link ComicDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ComicDetailFragment extends Fragment {
+public class ComicDetailFragment extends Fragment implements ComicDetailPresenter.View, AdapterView.OnItemClickListener {
     private static final String ARG_COMIC_ID = "comicId";
 
     private MarvelComic mComic;
     @BindView(R.id.title) TextView mTitle;
     @BindView(R.id.description) WebView mDescription;
     @BindView(R.id.background_image) ImageView mImage;
+    @BindView(R.id.character_list) ListView mCharacterListView;
 
     private ComicDetailFragmentListener mListener;
+    private ComicDetailPresenter mPresenter;
+    private MarvelResultAdapter adapter;
 
     public ComicDetailFragment() {
         // Required empty public constructor
@@ -61,6 +70,7 @@ public class ComicDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mComic = (MarvelComic) getArguments().getSerializable(ARG_COMIC_ID);
+            mPresenter = ProviderModule.getInstance().getComicDetailPresenter(this, mComic.getId());
         }
     }
 
@@ -77,6 +87,14 @@ public class ComicDetailFragment extends Fragment {
         Picasso.with(getContext())
                 .load(mComic.getRandomImage().getUrl(MarvelImage.Variants.DETAIL))
                 .into(mImage);
+
+        mPresenter.getOnCharactersChanged().subscribe(request -> {
+            if (adapter != null) { adapter.dispose(); }
+            adapter = new MarvelResultAdapter(getContext(), R.layout.character_item, request, new ComicItemViewDresser(getContext()));
+            mCharacterListView.setAdapter(adapter);
+            mCharacterListView.setOnItemClickListener(this);
+        });
+
         return view;
     }
 
@@ -95,6 +113,11 @@ public class ComicDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     /**

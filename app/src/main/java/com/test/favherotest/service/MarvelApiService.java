@@ -2,6 +2,7 @@ package com.test.favherotest.service;
 
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.model.MarvelApiResponse;
+import com.test.favherotest.model.MarvelCharacter;
 import com.test.favherotest.model.MarvelComic;
 
 import java.security.NoSuchAlgorithmException;
@@ -56,4 +57,10 @@ public class MarvelApiService {
         return marvelAPI.getComics(characterId, PUBLICKEY, ts, hash, offset, pageSize);
     }
 
+    public Observable<MarvelApiResponse<MarvelCharacter>> getCharacters(long comicId, int offset, int pageSize) {
+        String ts = getTimestamp();
+        String hash = getHash(ts);
+
+        return marvelAPI.getCharacters(comicId, PUBLICKEY, ts, hash, offset, pageSize);
+    }
 }

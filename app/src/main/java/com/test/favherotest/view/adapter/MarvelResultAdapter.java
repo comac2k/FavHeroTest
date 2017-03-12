@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
-import com.test.favherotest.R;
 import com.test.favherotest.model.MarvelApiResponse;
 import com.test.favherotest.service.MarvelApiRequest;
 
@@ -30,13 +29,15 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
 
     private final Context mContext;
     private final ViewDresser mDresser;
+    private final int mLayout;
     MarvelApiRequest<RequestType> mRequest;
     CompositeSubscription mSubscriptions = new CompositeSubscription();
 
-    public MarvelResultAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull MarvelApiRequest<RequestType> request, ViewDresser dresser) {
+    public MarvelResultAdapter(@NonNull Context context, @LayoutRes int layout, @NonNull MarvelApiRequest<RequestType> request, ViewDresser dresser) {
         this.mRequest = request;
         this.mContext = context;
         this.mDresser = dresser;
+        this.mLayout = layout;
     }
 
     public Observable<MarvelApiResponse<RequestType>> fetchMetadata() {
@@ -48,7 +49,7 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.comic_item, parent, false);
+            convertView = inflater.inflate(mLayout, parent, false);
         }
         else {
             cleanSubscriptionsForView(convertView);
