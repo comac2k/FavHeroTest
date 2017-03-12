@@ -41,6 +41,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     @BindView(R.id.comic_list) ListView mComicListView;
     @BindView(R.id.character_name) TextView mCharacterName;
     @BindView(R.id.spinner_image) ImageView mSpinnerImage;
+    @BindView(R.id.no_data_text) TextView mNoDataText;
 
     private MarvelResultAdapter adapter;
     private MarvelCharacter mCharacter;
@@ -78,6 +79,8 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
         ButterKnife.bind(this, view);
+        mComicListView.setEmptyView(mNoDataText);
+        mComicListView.setOnItemClickListener(this);
         mCharacterName.setText(mCharacter.getName());
         mSpinnerImage.setBackgroundResource(R.drawable.spinner);
         mSpinnerImage.setVisibility(View.VISIBLE);
@@ -90,7 +93,6 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
                 mSpinnerImage.setVisibility(View.GONE);
             }));
             mComicListView.setAdapter(adapter);
-            mComicListView.setOnItemClickListener(this);
         });
         return view;
     }

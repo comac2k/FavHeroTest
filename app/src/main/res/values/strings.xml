@@ -2,4 +2,5 @@
     <string name="app_name">FavHeroTest</string>
     <string name="comic_cover_description">Comic cover</string>
     <string name="characters_title">Characters</string>
+    <string name="no_data">Couldn\'t load data.</string>
 </resources>

@@ -80,7 +80,7 @@ public class MarvelResultAdapter<RequestType> implements ListAdapter {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return mRequest.isEmpty();
     }
 
     private HashMap<View, Subscription> viewSubscriptions = new HashMap<>();

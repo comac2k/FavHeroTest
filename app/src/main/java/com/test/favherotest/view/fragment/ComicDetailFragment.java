@@ -44,6 +44,7 @@ public class ComicDetailFragment extends BaseFragment implements ComicDetailPres
     @BindView(R.id.background_image) ImageView mImage;
     @BindView(R.id.character_list) ListView mCharacterListView;
     @BindView(R.id.spinner_image) ImageView mSpinnerImage;
+    @BindView(R.id.no_data_text) TextView mNoDataText;
 
     private ComicDetailFragmentListener mListener;
     private ComicDetailPresenter mPresenter;
@@ -83,6 +84,8 @@ public class ComicDetailFragment extends BaseFragment implements ComicDetailPres
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comic_detail, container, false);
         ButterKnife.bind(this, view);
+        mCharacterListView.setEmptyView(mNoDataText);
+        mCharacterListView.setOnItemClickListener(this);
         mTitle.setText(mComic.getTitle());
         mDescription.loadData("<style>* { color: white; font-size: 13pt; text-shadow: 2px 2px 2px black; }\nbody { background-color:transparent; margin: 0; padding: 0; }</style>" + mComic.getDescription(), "text/html", "UTF-8");
         mDescription.setTag(mComic.getDescription());
@@ -104,7 +107,6 @@ public class ComicDetailFragment extends BaseFragment implements ComicDetailPres
                 mSpinnerImage.setVisibility(View.GONE);
             }));
             mCharacterListView.setAdapter(adapter);
-            mCharacterListView.setOnItemClickListener(this);
         });
 
         return view;

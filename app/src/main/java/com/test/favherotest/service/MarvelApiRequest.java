@@ -59,6 +59,10 @@ public abstract class MarvelApiRequest<RequestType> {
 
     protected abstract Observable<MarvelApiResponse<RequestType>> requestResultPage(int pageNr);
 
+    public boolean isEmpty() {
+        return (mMetadata != null) && (mMetadata.getData().getTotal() == 0);
+    }
+
 
     class ResultsPageCache {
 
