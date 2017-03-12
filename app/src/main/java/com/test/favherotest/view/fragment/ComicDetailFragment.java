@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
+import com.test.favherotest.model.MarvelCharacter;
 import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.model.MarvelImage;
 import com.test.favherotest.presenter.ComicDetailPresenter;
@@ -117,6 +118,10 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        MarvelCharacter character = (MarvelCharacter) view.getTag();
+        if (character != null) {
+            mListener.onCharacterSelected(character);
+        }
 
     }
 
@@ -131,5 +136,6 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface ComicDetailFragmentListener {
+        void onCharacterSelected(MarvelCharacter character);
     }
 }

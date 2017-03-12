@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.test.favherotest.ProviderModule;
 import com.test.favherotest.R;
+import com.test.favherotest.model.MarvelCharacter;
 import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.presenter.ComicListPresenter;
 import com.test.favherotest.view.adapter.MarvelResultAdapter;
@@ -35,7 +37,10 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     private ComicListPresenter mPresenter;
 
     @BindView(R.id.comic_list) ListView mComicListView;
+    @BindView(R.id.character_name) TextView mCharacterName;
+
     private MarvelResultAdapter adapter;
+    private MarvelCharacter mCharacter;
 
     public ComicListFragment() {
         // Required empty public constructor
@@ -48,10 +53,10 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
      * @param heroId Parameter 1.
      * @return A new instance of fragment ComicListFragment.
      */
-    public static ComicListFragment newInstance(long heroId) {
+    public static ComicListFragment newInstance(MarvelCharacter character) {
         ComicListFragment fragment = new ComicListFragment();
         Bundle args = new Bundle();
-        args.putLong(ARG_HERO_ID, heroId);
+        args.putSerializable(ARG_HERO_ID, character);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,8 +65,8 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            long heroId = getArguments().getLong(ARG_HERO_ID);
-            mPresenter = ProviderModule.getInstance().getComicListPresenter(this, heroId);
+            mCharacter = (MarvelCharacter)getArguments().getSerializable(ARG_HERO_ID);
+            mPresenter = ProviderModule.getInstance().getComicListPresenter(this, mCharacter.getId());
         }
     }
 
@@ -70,6 +75,7 @@ public class ComicListFragment extends BaseFragment implements ComicListPresente
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic_list, container, false);
         ButterKnife.bind(this, view);
+        mCharacterName.setText(mCharacter.getName());
         mPresenter.getOnComicsChanged().subscribe(request -> {
             if (adapter != null) { adapter.dispose(); }
             adapter = new MarvelResultAdapter(getContext(), R.layout.comic_item, request, new ComicItemViewDresser(getContext()));

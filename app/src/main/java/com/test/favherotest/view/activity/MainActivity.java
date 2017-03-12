@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.test.favherotest.R;
+import com.test.favherotest.model.MarvelCharacter;
 import com.test.favherotest.model.MarvelComic;
 import com.test.favherotest.view.fragment.ComicDetailFragment;
 import com.test.favherotest.view.fragment.ComicListFragment;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements ComicListFragment.ComicListFragmentListener, ComicDetailFragment.ComicDetailFragmentListener {
 
     final static long FAV_HERO_ID = 1009220;
+    final static String FAV_HERO_NAME = "Captain America";
     final static String DETAIL_FRAGMENT_STACK_NAME = "detail";
 
     @Nullable @BindView(R.id.comic_detail_fragment_container) FrameLayout mComicDetailContainer;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ComicListFragment
         ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
-            ComicListFragment listFragment = ComicListFragment.newInstance(FAV_HERO_ID);
+            ComicListFragment listFragment = ComicListFragment.newInstance(new MarvelCharacter(FAV_HERO_ID, FAV_HERO_NAME));
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.comic_list_fragment_container, listFragment)
@@ -44,5 +46,15 @@ public class MainActivity extends AppCompatActivity implements ComicListFragment
         if (mComicDetailContainer == null) { transaction.addToBackStack(DETAIL_FRAGMENT_STACK_NAME); }
         transaction.replace(mComicDetailContainer == null ? R.id.comic_list_fragment_container : R.id.comic_detail_fragment_container, detailFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onCharacterSelected(MarvelCharacter character) {
+        ComicListFragment detailFragment = ComicListFragment.newInstance(character);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(DETAIL_FRAGMENT_STACK_NAME)
+                .replace(R.id.comic_list_fragment_container, detailFragment)
+                .commit();
     }
 }
