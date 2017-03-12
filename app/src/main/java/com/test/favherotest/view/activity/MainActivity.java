@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements ComicListFragment
         final FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         if (mComicDetailContainer == null) { transaction.addToBackStack(DETAIL_FRAGMENT_STACK_NAME); }
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         transaction.replace(mComicDetailContainer == null ? R.id.comic_list_fragment_container : R.id.comic_detail_fragment_container, detailFragment);
         transaction.commit();
     }
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements ComicListFragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(DETAIL_FRAGMENT_STACK_NAME)
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                 .replace(R.id.comic_list_fragment_container, detailFragment)
                 .commit();
     }
